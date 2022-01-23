@@ -14,6 +14,7 @@ namespace HPTestAPI
             var response  = newCard.CreateCard();
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
+            Console.WriteLine(response.deck_id);
         }
 
         [TestMethod]

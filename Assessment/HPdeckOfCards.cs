@@ -56,7 +56,23 @@ namespace Assessment
         public newCardDTO CreateCardWithJoker()
         {
 
-            var client = new RestClient("http://deckofcardsapi.com/api/deck/new/?jokers_enabled=true");
+            string prompt;
+            string req = "";
+            Console.Write("Do you want to include two Jokers in the deck? Y/N: ");
+            prompt = Console.ReadLine();
+
+            
+            //if (prompt == "Y")
+            //{
+            //    req = "http://deckofcardsapi.com/api/deck/new/?jokers_enabled=true";
+            //}
+            //else if (prompt == "N")
+            //{
+            //    //req = "http://deckofcardsapi.com/api/deck/new";
+            //    CreateCard();
+            //}
+            req = "http://deckofcardsapi.com/api/deck/new/?jokers_enabled=true";
+            var client = new RestClient(req);
             var request = new RestRequest("/", Method.POST);
             request.AddHeader("Accept", "application/json");
             request.RequestFormat = DataFormat.Json;
