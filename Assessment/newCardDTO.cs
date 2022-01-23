@@ -13,7 +13,7 @@ namespace Assessment
         public partial class newCardDTO
     {
             public bool Success { get; set; }
-            public string DeckId { get; set; }
+            public string deck_id { get; set; }
             public List<Card> Cards { get; set; }
             public long Remaining { get; set; }
         }
@@ -23,7 +23,7 @@ namespace Assessment
             public string Code { get; set; }
             public Uri Image { get; set; }
             public Images Images { get; set; }
-            public long Value { get; set; }
+            public string Value { get; set; }
             public string Suit { get; set; }
         }
 

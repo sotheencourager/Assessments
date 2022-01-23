@@ -16,20 +16,55 @@ namespace Assessment
         public newCardDTO DrawCard()
         {
             string deckIs = "rdtelv6kej9b";
-            string endPoint = deckIs + "/draw/?count=2";
+            string endPoint = deckIs + "/draw";
 
-            // arrange
             var client = new RestClient("http://deckofcardsapi.com/api/deck/");
             var request = new RestRequest(endPoint, Method.GET);
             request.AddHeader("Accept", "application/json");
             request.RequestFormat = DataFormat.Json;
 
-            // act
+            
             IRestResponse response = client.Execute(request);
             var resData = response.Content;
 
-            // assert
-            //Assert.That(response.ContentType, Is.EqualTo("application/json"));
+            var drawCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
+            return drawCard;
+
+
+        }
+        [Test]
+        public newCardDTO CreateCard()
+        {
+          
+            var client = new RestClient("http://deckofcardsapi.com/api/deck/new");
+            var request = new RestRequest("/", Method.GET);
+            request.AddHeader("Accept", "application/json");
+            request.RequestFormat = DataFormat.Json;
+
+            
+            IRestResponse response = client.Execute(request);
+            var resData = response.Content;
+
+
+            var newCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
+            return newCard;
+
+
+        }
+
+        [Test]
+        public newCardDTO CreateCardWithJoker()
+        {
+
+            var client = new RestClient("http://deckofcardsapi.com/api/deck/new/?jokers_enabled=true");
+            var request = new RestRequest("/", Method.POST);
+            request.AddHeader("Accept", "application/json");
+            request.RequestFormat = DataFormat.Json;
+
+
+            IRestResponse response = client.Execute(request);
+            var resData = response.Content;
+
 
             var newCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
             return newCard;
