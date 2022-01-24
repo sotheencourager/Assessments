@@ -12,10 +12,10 @@ namespace Assessment
     public class HPdeckOfCards
     {
      
-        public newCardDTO DrawCard()
+        public newCardDTO DrawCard(string deck_id)
         {
-            string deckIs = "rdtelv6kej9b";
-            string endPoint = deckIs + "/draw";
+            //string deckIs = "rdtelv6kej9b";
+            string endPoint = deck_id + "/draw";
 
             var client = new RestClient("http://deckofcardsapi.com/api/deck/");
             var request = new RestRequest(endPoint, Method.GET);
@@ -81,11 +81,11 @@ namespace Assessment
             return newCard;
         }
      
-        public newCardDTO shuffleCards()
+        public newCardDTO shuffleCards(string deck_id)
         {
             Random rand = new Random();
             int d_count = rand.Next(1, 6);
-            string endPoint = "new/shuffle/?deck_count="+ d_count+"/";
+            string endPoint = deck_id+"/shuffle/?deck_count=" + d_count+"/";
             
             var client = new RestClient("http://deckofcardsapi.com/api/deck/");
             var request = new RestRequest(endPoint, Method.POST);
@@ -103,6 +103,22 @@ namespace Assessment
         public newCardDTO reShuffleCards(string deck_id)
         {
             string endPoint = deck_id + "/shuffle/?remaining=true";
+
+            var client = new RestClient("http://deckofcardsapi.com/api/deck/");
+            var request = new RestRequest(endPoint, Method.POST);
+            request.AddHeader("Accept", "application/json");
+            request.RequestFormat = DataFormat.Json;
+
+
+            IRestResponse response = client.Execute(request);
+            var resData = response.Content;
+
+            var reshuffleCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
+            return reshuffleCard;
+        }
+        public newCardDTO partialDeck()
+        {
+            string endPoint = "/new/shuffle/?cards=AS,2S,KS,AD,2D,KD,AC";
 
             var client = new RestClient("http://deckofcardsapi.com/api/deck/");
             var request = new RestRequest(endPoint, Method.POST);

@@ -7,16 +7,35 @@ namespace HPTestAPI
     [TestClass]
     public class DeckOfCardTest
     {
-      
-        public static string createDk()
+        string deck_id;
+
+        [TestInitialize]
+        public void createDk()
         {
             var newCard = new HPdeckOfCards();
             var response  = newCard.CreateCard();
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Console.WriteLine(response.deck_id);
-            string dId = response.deck_id.ToString();
-            return dId;
+            deck_id = response.deck_id.ToString();
+            
+        }
+
+        [TestCleanup]
+        public void testClean()
+        {
+            deck_id = null;
+            Console.WriteLine("Test is completed and resource cleaned.");
+        }
+
+        [TestMethod]
+        public void TestCase()
+        {
+            createDeck();
+            drawDeck();
+            partialDeck();
+            reShuffleCards();
+            shuffleCards();
         }
 
         [TestMethod]
@@ -27,7 +46,6 @@ namespace HPTestAPI
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Console.WriteLine(response.deck_id);
-            string dId = response.deck_id.ToString();
         }
 
         [TestMethod]
@@ -44,22 +62,29 @@ namespace HPTestAPI
         public void drawDeck()
         {
             var card = new HPdeckOfCards();
-            var response = card.DrawCard();
+            var response = card.DrawCard(deck_id);
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
-            Assert.AreEqual("rdtelv6kej9b", response.deck_id);
+            Assert.AreEqual(deck_id, response.deck_id);
+            Console.WriteLine(response.Success);
         }
 
         [TestMethod]
         public void partialDeck()
         {
+            var card = new HPdeckOfCards();
+            var response = card.DrawCard(deck_id);
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Assert.AreEqual(deck_id, response.deck_id);
+            Console.WriteLine(response.Success);
         }
 
         [TestMethod]
         public void shuffleCards()
         {
             var card = new HPdeckOfCards();
-            var response = card.shuffleCards();
+            var response = card.shuffleCards(deck_id);
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Success);
             Console.WriteLine(response.deck_id);
@@ -68,7 +93,7 @@ namespace HPTestAPI
         [TestMethod]
         public void reShuffleCards()
         {
-            string deck_id = createDk();
+            //string deck_id = createDk();
             var card = new HPdeckOfCards();
             var response = card.reShuffleCards(deck_id);
             Assert.IsNotNull(response);
