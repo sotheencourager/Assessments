@@ -29,15 +29,13 @@ namespace Assessment
 
             var drawCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
             return drawCard;
-
-
         }
         [Test]
         public newCardDTO CreateCard()
         {
           
-            var client = new RestClient("http://deckofcardsapi.com/api/deck/new");
-            var request = new RestRequest("/", Method.GET);
+            var client = new RestClient("http://deckofcardsapi.com/api/deck/");
+            var request = new RestRequest("new/", Method.GET);
             request.AddHeader("Accept", "application/json");
             request.RequestFormat = DataFormat.Json;
 
@@ -48,7 +46,6 @@ namespace Assessment
 
             var newCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
             return newCard;
-
 
         }
 
@@ -81,11 +78,44 @@ namespace Assessment
             IRestResponse response = client.Execute(request);
             var resData = response.Content;
 
-
             var newCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
             return newCard;
+        }
+        [Test]
+        public newCardDTO shuffleCards()
+        {
+            Random rand = new Random();
+            int d_count = rand.Next(1, 6);
+            string endPoint = "new/shuffle/?deck_count="+ d_count+"/";
+            
+            var client = new RestClient("http://deckofcardsapi.com/api/deck/");
+            var request = new RestRequest(endPoint, Method.POST);
+            request.AddHeader("Accept", "application/json");
+            request.RequestFormat = DataFormat.Json;
 
 
+            IRestResponse response = client.Execute(request);
+            var resData = response.Content;
+
+            var shuffleCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
+            return shuffleCard;
+        }
+        [Test]
+        public newCardDTO reShuffleCards(string deck_id)
+        {
+            string endPoint = deck_id + "/shuffle/?remaining=true";
+
+            var client = new RestClient("http://deckofcardsapi.com/api/deck/");
+            var request = new RestRequest(endPoint, Method.POST);
+            request.AddHeader("Accept", "application/json");
+            request.RequestFormat = DataFormat.Json;
+
+
+            IRestResponse response = client.Execute(request);
+            var resData = response.Content;
+
+            var reshuffleCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
+            return reshuffleCard;
         }
     }
 }
