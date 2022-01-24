@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using NUnit.Framework;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace Assessment
 {
     public class HPdeckOfCards
     {
-         [Test]
+     
         public newCardDTO DrawCard()
         {
             string deckIs = "rdtelv6kej9b";
@@ -30,7 +29,7 @@ namespace Assessment
             var drawCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
             return drawCard;
         }
-        [Test]
+      
         public newCardDTO CreateCard()
         {
           
@@ -49,7 +48,7 @@ namespace Assessment
 
         }
 
-        [Test]
+    
         public newCardDTO CreateCardWithJoker()
         {
 
@@ -81,7 +80,7 @@ namespace Assessment
             var newCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
             return newCard;
         }
-        [Test]
+     
         public newCardDTO shuffleCards()
         {
             Random rand = new Random();
@@ -100,7 +99,7 @@ namespace Assessment
             var shuffleCard = JsonConvert.DeserializeObject<newCardDTO>(resData);
             return shuffleCard;
         }
-        [Test]
+    
         public newCardDTO reShuffleCards(string deck_id)
         {
             string endPoint = deck_id + "/shuffle/?remaining=true";

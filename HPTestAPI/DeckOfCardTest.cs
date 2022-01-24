@@ -7,8 +7,8 @@ namespace HPTestAPI
     [TestClass]
     public class DeckOfCardTest
     {
-        [TestMethod]
-        public static string createDeck()
+      
+        public static string createDk()
         {
             var newCard = new HPdeckOfCards();
             var response  = newCard.CreateCard();
@@ -17,6 +17,17 @@ namespace HPTestAPI
             Console.WriteLine(response.deck_id);
             string dId = response.deck_id.ToString();
             return dId;
+        }
+
+        [TestMethod]
+        public void createDeck()
+        {
+            var newCard = new HPdeckOfCards();
+            var response = newCard.CreateCard();
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response.Success);
+            Console.WriteLine(response.deck_id);
+            string dId = response.deck_id.ToString();
         }
 
         [TestMethod]
@@ -57,7 +68,7 @@ namespace HPTestAPI
         [TestMethod]
         public void reShuffleCards()
         {
-            string deck_id = createDeck();
+            string deck_id = createDk();
             var card = new HPdeckOfCards();
             var response = card.reShuffleCards(deck_id);
             Assert.IsNotNull(response);
